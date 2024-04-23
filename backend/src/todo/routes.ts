@@ -6,10 +6,13 @@ import {
 	oneTodoController,
 	todoAllController,
 	updateTodoController,
+	todoAllPublicController,
 } from "./controller";
 import { auth } from "../middleware/jwt";
 
 const todoRouter = express.Router();
+
+todoRouter.get("/all", todoAllPublicController);
 
 todoRouter.post("/", auth, createTodoController);
 todoRouter.get("/", auth, todoAllController);

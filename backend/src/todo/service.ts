@@ -133,3 +133,25 @@ export const updateTodo = async (
 	await AppDataSource.manager.save(todo);
 	return AbstractApiResponse.success("Todo Updated Successfully.");
 };
+
+export const todoPublicAll = async () => {
+	console.log("Here");
+	const [todos, count] = await AppDataSource.manager.findAndCount(Todo, {
+		select: {
+			id: true,
+			title: true,
+			descreption: true,
+			createdAt: true,
+			updatedAt: true,
+			status: true,
+			dueDate: true,
+		},
+	});
+	console.log("Here 2");
+
+	if (!todos) {
+		throw new CustomError("Not Found", 404, "Empty");
+	}
+
+	return AbstractApiResponse.success({ todos: todos, total: count });
+};

@@ -6,6 +6,7 @@ import {
 	oneTodo,
 	todoAll,
 	updateTodo,
+	todoPublicAll,
 } from "./service";
 import { validateAndTransform } from "../utils/validator";
 import { CreateTodoDto } from "./dto/create-todo.dto";
@@ -115,6 +116,19 @@ export const updateTodoController = async (
 		}
 		const response = await updateTodo(req.body, +req.params.id, +req.user.id);
 		res.status(response.status).json(response);
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const todoAllPublicController = async (
+	req: any,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		const response = await todoPublicAll();
+		res.json(response).status(response.status);
 	} catch (error) {
 		next(error);
 	}
